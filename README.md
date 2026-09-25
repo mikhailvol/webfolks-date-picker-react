@@ -2,6 +2,8 @@
 
 A single-date picker for **React + TypeScript** with the month and the year always one tap away. The compact sibling of the [WebFolks Date Range Picker](https://github.com/mikhailvol/webfolks-date-range-picker-react): same look, same mobile experience, same accessibility layer — one date instead of two, and quick month/year navigation instead of side-by-side months.
 
+**Live demo:** [webfolks-date-picker-react.vercel.app](https://webfolks-date-picker-react.vercel.app/) — playground, examples, and the props reference. Open it on a phone (or narrow the window under 768px) for the fullscreen mobile experience.
+
 - **Quick month & year selection** — the header shows `September ▾ 2026 ▾`. Tap the month for a 3×4 month pane, tap the year for a scrollable year pane (only the years you allow). Arrows step months in the day view and years in the month view.
 - **Two modes** — `date` (month, day, year → `Date`) and `month-day` (month and day only → `{ month, day }`, for birthdays, anniversaries, yearly renewals; February 29 included).
 - **Limited year window** — `yearsPast` / `yearsFuture` (default 30 / 10), or exact `minDate` / `maxDate`, plus `disablePast` / `disableFuture`. Months and years with nothing selectable are disabled in the panes.
