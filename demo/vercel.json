@@ -1,0 +1,4 @@
+{
+  "installCommand": "npm install --prefix .. && npm install",
+  "buildCommand": "npm run build --prefix .. && next build"
+}
