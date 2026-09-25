@@ -99,6 +99,13 @@ type DatePickerBaseProps = {
   /** First day of the week: `1` = Monday (default), `0` = Sunday. */
   weekStartsOn?: WeekStart;
 
+  /**
+   * Show the selected date (or the "Select date" prompt) in the calendar
+   * footer. Default `true`. With `false`, and `showToday` / `showClear`
+   * off too, the desktop footer is omitted entirely; the mobile sheet keeps
+   * its CTA. The input text is unaffected.
+   */
+  showFooterDate?: boolean;
   /** Show the "Today" shortcut in the footer. Default `true`. */
   showToday?: boolean;
   /** Show the "Clear" action in the footer once a date is selected. Default `true`. */

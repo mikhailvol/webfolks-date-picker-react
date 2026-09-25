@@ -6,6 +6,8 @@ import type { DatePickerStrings } from "./types";
 export type PickerFooterProps = {
   /** Live summary: the formatted draft, or the "Select date" prompt. */
   summary: string;
+  /** Hide the summary (`showFooterDate={false}`). */
+  showSummary: boolean;
   strings: DatePickerStrings;
   showToday: boolean;
   onToday: () => void;
@@ -21,6 +23,7 @@ export type PickerFooterProps = {
 
 export function PickerFooter({
   summary,
+  showSummary,
   strings,
   showToday,
   onToday,
@@ -32,7 +35,13 @@ export function PickerFooter({
   onCta,
   ctaClassName,
 }: PickerFooterProps) {
-  const actions = (showToday || showClear) && (
+  const hasActions = showToday || showClear;
+  const summaryNode = showSummary && (
+    <div className="wf-sdp-footer-left" aria-live="polite">
+      {summary}
+    </div>
+  );
+  const actions = hasActions && (
     <div className="wf-sdp-footer-actions">
       {showClear && (
         <button type="button" className="wf-sdp-link wf-sdp-link--muted" onClick={onClear}>
@@ -50,12 +59,12 @@ export function PickerFooter({
   if (mobile) {
     return (
       <div className="wf-sdp-m-footer">
-        <div className="wf-sdp-m-footer-row">
-          <div className="wf-sdp-footer-left" aria-live="polite">
-            {summary}
+        {(showSummary || hasActions) && (
+          <div className="wf-sdp-m-footer-row">
+            {summaryNode}
+            {actions}
           </div>
-          {actions}
-        </div>
+        )}
         <button
           type="button"
           className={["wf-sdp-cta", ctaClassName].filter(Boolean).join(" ")}
@@ -69,11 +78,11 @@ export function PickerFooter({
     );
   }
 
+  if (!showSummary && !hasActions) return null;
+
   return (
     <div className="wf-sdp-footer">
-      <div className="wf-sdp-footer-left" aria-live="polite">
-        {summary}
-      </div>
+      {summaryNode}
       {actions}
     </div>
   );

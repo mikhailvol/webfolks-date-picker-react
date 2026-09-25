@@ -156,6 +156,17 @@ describe("DatePicker (date mode)", () => {
     expect(document.querySelector<HTMLInputElement>('input[name="dob"]')!.value).toBe("2026-03-02");
   });
 
+  it("showFooterDate hides the summary; with no shortcuts the desktop footer is gone", () => {
+    const { unmount } = render(<DatePicker showFooterDate={false} />);
+    openPicker();
+    expect(document.querySelector(".wf-sdp-footer-left")).toBeNull();
+    expect(screen.getByRole("button", { name: "Today" })).toBeInTheDocument();
+    unmount();
+    render(<DatePicker showFooterDate={false} showToday={false} showClear={false} />);
+    openPicker();
+    expect(document.querySelector(".wf-sdp-footer")).toBeNull();
+  });
+
   it("primaryColor is applied to the field and the portaled popover", () => {
     render(<DatePicker primaryColor="#0f766e" />);
     expect(document.querySelector<HTMLElement>(".wf-sdp-field")!.style.getPropertyValue("--wf-sdp-primary")).toBe("#0f766e");

@@ -256,6 +256,7 @@ type PlaygroundConfig = {
   locale: string;
   weekStartsOn: 0 | 1;
   primaryColor: string;
+  showFooterDate: boolean;
   showToday: boolean;
   showClear: boolean;
   align: PopoverAlign;
@@ -274,6 +275,7 @@ const pgDefaults: PlaygroundConfig = {
   locale: "en",
   weekStartsOn: 1,
   primaryColor: "",
+  showFooterDate: true,
   showToday: true,
   showClear: true,
   align: "center",
@@ -313,6 +315,7 @@ function Playground() {
     locale: c.locale,
     weekStartsOn: c.weekStartsOn,
     primaryColor: c.primaryColor.trim() || undefined,
+    showFooterDate: c.showFooterDate,
     showToday: c.showToday,
     showClear: c.showClear,
     align: c.align,
@@ -331,6 +334,7 @@ function Playground() {
     c.locale !== "en" && `locale="${c.locale}"`,
     c.weekStartsOn !== 1 && `weekStartsOn={${c.weekStartsOn}}`,
     shared.primaryColor && `primaryColor="${shared.primaryColor}"`,
+    !c.showFooterDate && "showFooterDate={false}",
     !c.showToday && "showToday={false}",
     !c.showClear && "showClear={false}",
     c.align !== "center" && `align="${c.align}"`,
@@ -406,6 +410,7 @@ function Playground() {
         </Field>
         <Check label="disablePast" checked={c.disablePast} onChange={(v) => set("disablePast", v)} />
         <Check label="disableFuture" checked={c.disableFuture} onChange={(v) => set("disableFuture", v)} />
+        <Check label="showFooterDate" checked={c.showFooterDate} onChange={(v) => set("showFooterDate", v)} />
         <Check label="showToday" checked={c.showToday} onChange={(v) => set("showToday", v)} />
         <Check label="showClear" checked={c.showClear} onChange={(v) => set("showClear", v)} />
         <Check label="required" checked={c.required} onChange={(v) => set("required", v)} />
@@ -448,6 +453,7 @@ const PROPS: [string, string, string][] = [
   ["format", `"MMM d, yyyy" · "MMMM d"`, "Display pattern: yyyy, yy, MMMM, MMM, MM, M, dd, d, EEEE, EEE."],
   ["locale", `"en"`, "BCP-47 tag for month and weekday names."],
   ["weekStartsOn", "1", "1 = Monday, 0 = Sunday."],
+  ["showFooterDate", "true", "Selected date (or the prompt) in the calendar footer. Off, together with showToday / showClear, removes the desktop footer entirely."],
   ["showToday / showClear", "true", "Footer shortcuts. Today is hidden automatically when today is out of bounds."],
   ["align / drop", `"center" / "down"`, "Desktop popover placement; drop \"auto\" flips up when there is no room below."],
   ["required / error", "false / —", "required validates on close; error shows a message from your form library (string) or the default (true)."],
