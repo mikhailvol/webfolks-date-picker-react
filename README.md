@@ -83,6 +83,7 @@ Everything is optional. The `mode` prop decides the value type: `Date | null` in
 | `format` | `"MMM d, yyyy"` · `"MMMM d"` | Display pattern for the input and footer (tokens below). |
 | `locale` | `"en"` | BCP-47 tag for month and weekday names (`"uk"`, `"de"`, `"ja"`, …). |
 | `weekStartsOn` | `1` | `1` = Monday, `0` = Sunday. |
+| `showFooter` | `true` | The whole footer (summary, Today, Clear). Off, the desktop popover ends after the day grid; the mobile sheet keeps its confirm CTA. |
 | `showFooterDate` | `true` | Selected date (or the prompt) in the calendar footer. Off, together with `showToday` / `showClear`, removes the desktop footer entirely. |
 | `showToday` | `true` | "Today" shortcut in the footer. Hidden automatically when today is out of bounds. |
 | `showClear` | `true` | "Clear" action in the footer once a date is selected. |

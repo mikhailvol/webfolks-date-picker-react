@@ -167,6 +167,14 @@ describe("DatePicker (date mode)", () => {
     expect(document.querySelector(".wf-sdp-footer")).toBeNull();
   });
 
+  it("showFooter={false} removes the desktop footer entirely", () => {
+    render(<DatePicker showFooter={false} defaultValue={new Date(2026, 2, 3)} />);
+    openPicker();
+    expect(document.querySelector(".wf-sdp-footer")).toBeNull();
+    expect(screen.queryByRole("button", { name: "Today" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Clear" })).toBeNull();
+  });
+
   it("primaryColor is applied to the field and the portaled popover", () => {
     render(<DatePicker primaryColor="#0f766e" />);
     expect(document.querySelector<HTMLElement>(".wf-sdp-field")!.style.getPropertyValue("--wf-sdp-primary")).toBe("#0f766e");

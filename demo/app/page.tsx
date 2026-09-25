@@ -256,6 +256,7 @@ type PlaygroundConfig = {
   locale: string;
   weekStartsOn: 0 | 1;
   primaryColor: string;
+  showFooter: boolean;
   showFooterDate: boolean;
   showToday: boolean;
   showClear: boolean;
@@ -275,6 +276,7 @@ const pgDefaults: PlaygroundConfig = {
   locale: "en",
   weekStartsOn: 1,
   primaryColor: "",
+  showFooter: true,
   showFooterDate: true,
   showToday: true,
   showClear: true,
@@ -315,6 +317,7 @@ function Playground() {
     locale: c.locale,
     weekStartsOn: c.weekStartsOn,
     primaryColor: c.primaryColor.trim() || undefined,
+    showFooter: c.showFooter,
     showFooterDate: c.showFooterDate,
     showToday: c.showToday,
     showClear: c.showClear,
@@ -334,7 +337,8 @@ function Playground() {
     c.locale !== "en" && `locale="${c.locale}"`,
     c.weekStartsOn !== 1 && `weekStartsOn={${c.weekStartsOn}}`,
     shared.primaryColor && `primaryColor="${shared.primaryColor}"`,
-    !c.showFooterDate && "showFooterDate={false}",
+    !c.showFooter && "showFooter={false}",
+    c.showFooter && !c.showFooterDate && "showFooterDate={false}",
     !c.showToday && "showToday={false}",
     !c.showClear && "showClear={false}",
     c.align !== "center" && `align="${c.align}"`,
@@ -410,6 +414,7 @@ function Playground() {
         </Field>
         <Check label="disablePast" checked={c.disablePast} onChange={(v) => set("disablePast", v)} />
         <Check label="disableFuture" checked={c.disableFuture} onChange={(v) => set("disableFuture", v)} />
+        <Check label="showFooter" checked={c.showFooter} onChange={(v) => set("showFooter", v)} />
         <Check label="showFooterDate" checked={c.showFooterDate} onChange={(v) => set("showFooterDate", v)} />
         <Check label="showToday" checked={c.showToday} onChange={(v) => set("showToday", v)} />
         <Check label="showClear" checked={c.showClear} onChange={(v) => set("showClear", v)} />
@@ -453,6 +458,7 @@ const PROPS: [string, string, string][] = [
   ["format", `"MMM d, yyyy" · "MMMM d"`, "Display pattern: yyyy, yy, MMMM, MMM, MM, M, dd, d, EEEE, EEE."],
   ["locale", `"en"`, "BCP-47 tag for month and weekday names."],
   ["weekStartsOn", "1", "1 = Monday, 0 = Sunday."],
+  ["showFooter", "true", "The whole footer (summary, Today, Clear). Off, the desktop popover ends after the day grid; the mobile sheet keeps its confirm CTA."],
   ["showFooterDate", "true", "Selected date (or the prompt) in the calendar footer. Off, together with showToday / showClear, removes the desktop footer entirely."],
   ["showToday / showClear", "true", "Footer shortcuts. Today is hidden automatically when today is out of bounds."],
   ["align / drop", `"center" / "down"`, "Desktop popover placement; drop \"auto\" flips up when there is no room below."],

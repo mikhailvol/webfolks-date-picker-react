@@ -84,6 +84,7 @@ export const DatePicker = forwardRef<DatePickerRef, DatePickerProps>(function Da
     format,
     locale = "en",
     weekStartsOn = 1,
+    showFooter = true,
     showFooterDate = true,
     showToday = true,
     showClear = true,
@@ -680,11 +681,11 @@ export const DatePicker = forwardRef<DatePickerRef, DatePickerProps>(function Da
   const footer = (
     <PickerFooter
       summary={footerSummary}
-      showSummary={showFooterDate}
+      showSummary={showFooter && showFooterDate}
       strings={strings}
-      showToday={todayAvailable}
+      showToday={showFooter && todayAvailable}
       onToday={onToday}
-      showClear={showClear && !!draft}
+      showClear={showFooter && showClear && !!draft}
       onClear={onClear}
       mobile={isMobile}
       ctaDisabled={!draft}

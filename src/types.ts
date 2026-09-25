@@ -100,6 +100,12 @@ type DatePickerBaseProps = {
   weekStartsOn?: WeekStart;
 
   /**
+   * Show the calendar footer at all (summary, Today, Clear). Default `true`.
+   * With `false`, the desktop popover ends right after the day grid; the
+   * mobile sheet keeps only its confirm CTA.
+   */
+  showFooter?: boolean;
+  /**
    * Show the selected date (or the "Select date" prompt) in the calendar
    * footer. Default `true`. With `false`, and `showToday` / `showClear`
    * off too, the desktop footer is omitted entirely; the mobile sheet keeps
