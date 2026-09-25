@@ -175,6 +175,13 @@ describe("DatePicker (date mode)", () => {
     expect(screen.queryByRole("button", { name: "Clear" })).toBeNull();
   });
 
+  it("compact adds the compact classes to the field and the popover", () => {
+    render(<DatePicker compact />);
+    expect(document.querySelector(".wf-sdp-field")).toHaveClass("wf-sdp-field--compact");
+    openPicker();
+    expect(document.querySelector(".wf-sdp-popover")).toHaveClass("wf-sdp-popover--compact");
+  });
+
   it("primaryColor is applied to the field and the portaled popover", () => {
     render(<DatePicker primaryColor="#0f766e" />);
     expect(document.querySelector<HTMLElement>(".wf-sdp-field")!.style.getPropertyValue("--wf-sdp-primary")).toBe("#0f766e");

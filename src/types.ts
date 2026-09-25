@@ -100,6 +100,12 @@ type DatePickerBaseProps = {
   weekStartsOn?: WeekStart;
 
   /**
+   * Tighter spacing: a slimmer input and a smaller desktop popover (roughly
+   * 25% less tall and narrower). Mobile keeps its full-size touch targets.
+   * Default `false`.
+   */
+  compact?: boolean;
+  /**
    * Show the calendar footer at all (summary, Today, Clear). Default `true`.
    * With `false`, the desktop popover ends right after the day grid; the
    * mobile sheet keeps only its confirm CTA.

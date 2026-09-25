@@ -84,6 +84,7 @@ export const DatePicker = forwardRef<DatePickerRef, DatePickerProps>(function Da
     format,
     locale = "en",
     weekStartsOn = 1,
+    compact = false,
     showFooter = true,
     showFooterDate = true,
     showToday = true,
@@ -700,7 +701,7 @@ export const DatePicker = forwardRef<DatePickerRef, DatePickerProps>(function Da
       id={popoverId}
       popoverRef={popoverRef}
       style={themeStyle}
-      className={classNames?.popover}
+      className={[compact && "wf-sdp-popover--compact", classNames?.popover].filter(Boolean).join(" ") || undefined}
       onKeyDown={onPopoverKeyDown}
       gesture={gesture}
       onClose={() => closePicker(true)}
@@ -714,7 +715,7 @@ export const DatePicker = forwardRef<DatePickerRef, DatePickerProps>(function Da
       id={popoverId}
       popoverRef={popoverRef}
       style={positionStyle ? { ...positionStyle, ...themeStyle } : themeStyle && { position: "fixed", top: -9999, left: -9999, ...themeStyle }}
-      className={[!showFooter && "wf-sdp-popover--no-footer", classNames?.popover].filter(Boolean).join(" ") || undefined}
+      className={[compact && "wf-sdp-popover--compact", !showFooter && "wf-sdp-popover--no-footer", classNames?.popover].filter(Boolean).join(" ") || undefined}
       ariaLabel={strings.selectDate}
       onKeyDown={onPopoverKeyDown}
       gesture={gesture}
@@ -728,7 +729,7 @@ export const DatePicker = forwardRef<DatePickerRef, DatePickerProps>(function Da
 
   return (
     <span
-      className={["wf-sdp-field", className, classNames?.root].filter(Boolean).join(" ")}
+      className={["wf-sdp-field", compact && "wf-sdp-field--compact", className, classNames?.root].filter(Boolean).join(" ")}
       style={themeStyle ? { ...themeStyle, ...style } : style}
     >
       <input

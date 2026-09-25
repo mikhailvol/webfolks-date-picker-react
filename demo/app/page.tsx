@@ -256,6 +256,7 @@ type PlaygroundConfig = {
   locale: string;
   weekStartsOn: 0 | 1;
   primaryColor: string;
+  compact: boolean;
   showFooter: boolean;
   showFooterDate: boolean;
   showToday: boolean;
@@ -276,6 +277,7 @@ const pgDefaults: PlaygroundConfig = {
   locale: "en",
   weekStartsOn: 1,
   primaryColor: "",
+  compact: false,
   showFooter: true,
   showFooterDate: true,
   showToday: true,
@@ -317,6 +319,7 @@ function Playground() {
     locale: c.locale,
     weekStartsOn: c.weekStartsOn,
     primaryColor: c.primaryColor.trim() || undefined,
+    compact: c.compact,
     showFooter: c.showFooter,
     showFooterDate: c.showFooterDate,
     showToday: c.showToday,
@@ -337,6 +340,7 @@ function Playground() {
     c.locale !== "en" && `locale="${c.locale}"`,
     c.weekStartsOn !== 1 && `weekStartsOn={${c.weekStartsOn}}`,
     shared.primaryColor && `primaryColor="${shared.primaryColor}"`,
+    c.compact && "compact",
     !c.showFooter && "showFooter={false}",
     c.showFooter && !c.showFooterDate && "showFooterDate={false}",
     !c.showToday && "showToday={false}",
@@ -414,6 +418,7 @@ function Playground() {
         </Field>
         <Check label="disablePast" checked={c.disablePast} onChange={(v) => set("disablePast", v)} />
         <Check label="disableFuture" checked={c.disableFuture} onChange={(v) => set("disableFuture", v)} />
+        <Check label="compact" checked={c.compact} onChange={(v) => set("compact", v)} />
         <Check label="showFooter" checked={c.showFooter} onChange={(v) => set("showFooter", v)} />
         <Check label="showFooterDate" checked={c.showFooterDate} onChange={(v) => set("showFooterDate", v)} />
         <Check label="showToday" checked={c.showToday} onChange={(v) => set("showToday", v)} />
@@ -458,6 +463,7 @@ const PROPS: [string, string, string][] = [
   ["format", `"MMM d, yyyy" · "MMMM d"`, "Display pattern: yyyy, yy, MMMM, MMM, MM, M, dd, d, EEEE, EEE."],
   ["locale", `"en"`, "BCP-47 tag for month and weekday names."],
   ["weekStartsOn", "1", "1 = Monday, 0 = Sunday."],
+  ["compact", "false", "Tighter spacing: slimmer input, smaller desktop popover (about 25% less tall). Mobile keeps full-size touch targets."],
   ["showFooter", "true", "The whole footer (summary, Today, Clear). Off, the desktop popover ends after the day grid; the mobile sheet keeps its confirm CTA."],
   ["showFooterDate", "true", "Selected date (or the prompt) in the calendar footer. Off, together with showToday / showClear, removes the desktop footer entirely."],
   ["showToday / showClear", "true", "Footer shortcuts. Today is hidden automatically when today is out of bounds."],

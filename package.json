@@ -1,6 +1,6 @@
 {
   "name": "webfolks-date-picker-react",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "WebFolks Date Picker for React — one date, with quick month and year selection. Desktop popover, fullscreen mobile experience, keyboard accessible, locale-aware, themeable primary color, zero dependencies.",
   "license": "MIT",
   "author": "Mykhailo Voloshyn, WebFolks.io",

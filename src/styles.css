@@ -429,6 +429,99 @@
   pointer-events: none;
 }
 
+/* Compact variant (desktop): slimmer input, tighter popover */
+.wf-sdp-field--compact .wf-sdp-input {
+  min-width: 180px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) {
+  padding: 8px;
+  font-size: 14px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-month {
+  padding: 4px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-toolbar {
+  padding-bottom: 6px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-nav {
+  padding: 2px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-nav svg {
+  width: 20px;
+  height: 20px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-title-btn {
+  padding: 4px 4px 4px 8px;
+  font-size: 14px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-title-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-weekdays {
+  margin-bottom: 4px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-weekday {
+  font-size: 12px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-grid {
+  gap: 2px 0;
+  margin-bottom: 8px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-cell {
+  padding: 6px 4px;
+  border-radius: 6px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-day {
+  min-width: 24px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-pane {
+  gap: 4px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-months,
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-years {
+  padding-bottom: 8px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-option {
+  min-height: 32px;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-footer {
+  margin: 0 4px;
+  padding-top: 6px;
+}
+
+.wf-sdp-popover--compact:not(.wf-sdp-popover--mobile) .wf-sdp-link {
+  padding: 4px 6px;
+  font-size: 12px;
+}
+
+.wf-sdp-popover--compact.wf-sdp-popover--no-footer:not(.wf-sdp-popover--mobile) .wf-sdp-grid,
+.wf-sdp-popover--compact.wf-sdp-popover--no-footer:not(.wf-sdp-popover--mobile) .wf-sdp-months,
+.wf-sdp-popover--compact.wf-sdp-popover--no-footer:not(.wf-sdp-popover--mobile) .wf-sdp-years {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
 /* Mobile fullscreen sheet */
 .wf-sdp-popover--mobile {
   position: fixed;
