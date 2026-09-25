@@ -278,6 +278,14 @@
   color: var(--_wf-sdp-on-primary);
 }
 
+/* Without a footer, the grid's bottom spacing matches the top */
+.wf-sdp-popover--no-footer .wf-sdp-grid,
+.wf-sdp-popover--no-footer .wf-sdp-months,
+.wf-sdp-popover--no-footer .wf-sdp-years {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
 /* Month / year panes */
 .wf-sdp-pane {
   position: absolute;

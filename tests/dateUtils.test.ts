@@ -70,9 +70,11 @@ describe("month/day values", () => {
 });
 
 describe("grids", () => {
-  it("always builds 6 weeks, honoring the week start", () => {
-    const monday = buildWeeks(new Date(2026, 2, 1), 1); // March 2026 starts on a Sunday
+  it("builds only the weeks a month needs (min 5), honoring the week start", () => {
+    const monday = buildWeeks(new Date(2026, 2, 1), 1); // March 2026 starts on a Sunday: 6 rows
     expect(monday).toHaveLength(6);
+    expect(buildWeeks(new Date(2026, 4, 1), 1)).toHaveLength(5); // May 2026: 5 rows
+    expect(buildWeeks(new Date(2027, 1, 1), 1)).toHaveLength(5); // February 2027: 4 rows, padded to 5
     expect(monday[0]!.slice(0, 6).every((c) => c === null)).toBe(true);
     expect(monday[0]![6]!.getDate()).toBe(1);
     const sunday = buildWeeks(new Date(2026, 2, 1), 0);

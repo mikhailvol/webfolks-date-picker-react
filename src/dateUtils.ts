@@ -194,8 +194,8 @@ export function yearsInBounds(bounds: Bounds): number[] {
 // Day grids ------------------------------------------------------------------
 
 /**
- * Weeks of a month as rows of 7, padded with `null` and always 6 rows tall so
- * the popover never changes height while navigating.
+ * Weeks of a month as rows of 7, padded with `null`. At least 5 rows, so the
+ * rare 4-week February doesn't shrink the grid; 6 only when the month needs it.
  */
 export function buildWeeks(month: Date, weekStartsOn: WeekStart = 1): (Date | null)[][] {
   const first = startOfMonth(month);
@@ -206,7 +206,7 @@ export function buildWeeks(month: Date, weekStartsOn: WeekStart = 1): (Date | nu
   for (let d = 1; d <= total; d++) {
     cells.push(new Date(month.getFullYear(), month.getMonth(), d));
   }
-  while (cells.length < 42) cells.push(null);
+  while (cells.length % 7 !== 0 || cells.length < 35) cells.push(null);
   const weeks: (Date | null)[][] = [];
   for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
   return weeks;
