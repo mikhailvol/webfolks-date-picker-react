@@ -1,0 +1,575 @@
+/*! webfolks-date-picker-react | MIT License | © 2026 Mykhailo Voloshyn, WebFolks.io */
+
+/*
+ * Theming — override any `--wf-sdp-*` variable on :root (or on any ancestor
+ * of the input; the popover renders in a portal, so use the `primaryColor`
+ * prop or :root for the primary color). Every variable falls back to its
+ * `--wf-dp-*` twin from the WebFolks Date Range Picker, so one theme covers
+ * both libraries.
+ *
+ * The private `--_wf-sdp-*` values are derived here, on the component roots,
+ * so `primaryColor` (an inline `--wf-sdp-primary`) flows into hover and tint
+ * colors too.
+ */
+.wf-sdp-field,
+.wf-sdp-popover {
+  --_wf-sdp-primary: var(--wf-sdp-primary, var(--wf-dp-primary, #2960e3));
+  --_wf-sdp-on-primary: var(--wf-sdp-on-primary, #ffffff);
+  --_wf-sdp-primary-hover: var(
+    --wf-sdp-primary-hover,
+    color-mix(in srgb, var(--_wf-sdp-primary) 88%, black)
+  );
+  --_wf-sdp-primary-soft: var(
+    --wf-sdp-primary-soft,
+    color-mix(in srgb, var(--_wf-sdp-primary) 10%, white)
+  );
+
+  --_wf-sdp-fg-strong: var(--wf-sdp-fg-strong, var(--wf-dp-fg-strong, #1b1c1f));
+  --_wf-sdp-fg-medium: var(--wf-sdp-fg-medium, var(--wf-dp-fg-medium, #3e4146));
+  --_wf-sdp-fg-weak: var(--wf-sdp-fg-weak, var(--wf-dp-fg-weak, #818996));
+
+  --_wf-sdp-border: var(--wf-sdp-border, var(--wf-dp-border, #e5e7eb));
+  --_wf-sdp-bg: var(--wf-sdp-bg, var(--wf-dp-bg, #ffffff));
+  --_wf-sdp-error: var(--wf-sdp-error, var(--wf-dp-error, #e53935));
+  --_wf-sdp-hover: var(--wf-sdp-hover, var(--wf-dp-hover, #f3f4f6));
+  --_wf-sdp-shadow: var(
+    --wf-sdp-shadow,
+    var(--wf-dp-shadow, 0 10px 25px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.06))
+  );
+
+  --_wf-sdp-radius-popover: var(--wf-sdp-radius-popover, var(--wf-dp-radius-popover, 14px));
+  --_wf-sdp-radius-input: var(--wf-sdp-radius-input, var(--wf-dp-radius-input, 10px));
+  --_wf-sdp-z-index: var(--wf-sdp-z-index, var(--wf-dp-z-index, 9999));
+
+  --_wf-sdp-safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Field wrapper */
+.wf-sdp-field {
+  position: relative;
+  display: inline-block;
+}
+
+/* Input */
+.wf-sdp-input {
+  min-width: 220px;
+  padding: 12px 14px;
+  border: 1px solid var(--_wf-sdp-border);
+  border-radius: var(--_wf-sdp-radius-input);
+  background-color: var(--_wf-sdp-bg);
+  color: var(--_wf-sdp-fg-strong);
+  font: inherit;
+  cursor: pointer;
+}
+
+.wf-sdp-input:focus-visible {
+  outline: 2px solid var(--_wf-sdp-primary);
+  outline-offset: 1px;
+}
+
+.wf-sdp-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.wf-sdp-error {
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.2;
+  color: var(--_wf-sdp-error);
+}
+
+.wf-sdp-input-error {
+  border-color: var(--_wf-sdp-error);
+}
+
+/* Popover */
+.wf-sdp-popover {
+  z-index: var(--_wf-sdp-z-index);
+  padding: 12px;
+  background: var(--_wf-sdp-bg);
+  border: 1px solid var(--_wf-sdp-border);
+  border-radius: var(--_wf-sdp-radius-popover);
+  box-shadow: var(--_wf-sdp-shadow);
+  width: max-content;
+  color: var(--_wf-sdp-fg-strong);
+}
+
+.wf-sdp-month {
+  padding: 8px;
+  border-radius: 12px;
+}
+
+/* Toolbar: arrows + month/year toggles */
+.wf-sdp-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 0 0 10px;
+}
+
+.wf-sdp-nav {
+  flex: none;
+  padding: 4px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: var(--_wf-sdp-fg-weak);
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.wf-sdp-nav:hover {
+  background: var(--_wf-sdp-hover);
+}
+
+.wf-sdp-nav:focus-visible {
+  outline: 2px solid var(--_wf-sdp-primary);
+}
+
+.wf-sdp-nav:disabled {
+  opacity: 0.35;
+  cursor: default;
+  background: none;
+}
+
+.wf-sdp-nav--hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.wf-sdp-nav svg {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+
+.wf-sdp-title {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.wf-sdp-title-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 6px 6px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--_wf-sdp-fg-strong);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.wf-sdp-title-btn:hover {
+  background: var(--_wf-sdp-hover);
+}
+
+.wf-sdp-title-btn:focus-visible {
+  outline: 2px solid var(--_wf-sdp-primary);
+  outline-offset: -1px;
+}
+
+.wf-sdp-title-btn[aria-expanded="true"] {
+  background: var(--_wf-sdp-primary-soft);
+  color: var(--_wf-sdp-primary);
+}
+
+.wf-sdp-title-btn svg {
+  width: 18px;
+  height: 18px;
+  color: var(--_wf-sdp-fg-weak);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.wf-sdp-title-btn[aria-expanded="true"] svg {
+  color: currentColor;
+  transform: rotate(180deg);
+}
+
+/* Body: the day grid sets the height; panes overlay it */
+.wf-sdp-body {
+  position: relative;
+}
+
+.wf-sdp-days--hidden {
+  visibility: hidden;
+}
+
+.wf-sdp-weekdays,
+.wf-sdp-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.wf-sdp-weekdays {
+  margin-bottom: 8px;
+}
+
+.wf-sdp-grid {
+  display: grid;
+  gap: 4px 0;
+  margin-bottom: 12px;
+}
+
+.wf-sdp-weekday {
+  font-size: 13px;
+  text-align: center;
+  color: var(--_wf-sdp-fg-medium);
+}
+
+/* Day cells */
+.wf-sdp-cell {
+  position: relative;
+  padding: 10px 6px;
+  border-radius: 8px;
+  text-align: center;
+  color: var(--_wf-sdp-fg-strong);
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.wf-sdp-cell:hover {
+  background: var(--_wf-sdp-hover);
+}
+
+.wf-sdp-cell:focus-visible {
+  outline: 2px solid var(--_wf-sdp-primary);
+  outline-offset: -2px;
+  z-index: 1;
+}
+
+.wf-sdp-day {
+  display: inline-block;
+  min-width: 28px;
+}
+
+.wf-sdp-empty {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.wf-sdp-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none; /* prevents accidental taps */
+}
+
+.wf-sdp-today {
+  color: var(--_wf-sdp-primary);
+  font-weight: 700;
+}
+
+.wf-sdp-selected,
+.wf-sdp-selected:hover {
+  background: var(--_wf-sdp-primary);
+  color: var(--_wf-sdp-on-primary);
+}
+
+/* Month / year panes */
+.wf-sdp-pane {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  gap: 8px;
+  background: var(--_wf-sdp-bg);
+}
+
+.wf-sdp-months {
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
+  padding-bottom: 12px;
+}
+
+.wf-sdp-years {
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: max-content;
+  align-content: start;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 2px 2px 12px;
+  scrollbar-width: thin;
+}
+
+.wf-sdp-option {
+  min-height: 44px;
+  padding: 8px 4px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  font: inherit;
+  font-weight: 500;
+  color: var(--_wf-sdp-fg-strong);
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.wf-sdp-option:hover {
+  background: var(--_wf-sdp-hover);
+}
+
+.wf-sdp-option:focus-visible {
+  outline: 2px solid var(--_wf-sdp-primary);
+  outline-offset: -2px;
+}
+
+.wf-sdp-option:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: none;
+}
+
+.wf-sdp-option--today {
+  color: var(--_wf-sdp-primary);
+  font-weight: 700;
+}
+
+.wf-sdp-option--selected,
+.wf-sdp-option--selected:hover {
+  background: var(--_wf-sdp-primary);
+  color: var(--_wf-sdp-on-primary);
+}
+
+/* Footer */
+.wf-sdp-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 8px;
+  padding: 8px 0 0;
+  border-top: 1px solid var(--_wf-sdp-border);
+}
+
+.wf-sdp-footer-left {
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--_wf-sdp-fg-medium);
+}
+
+.wf-sdp-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-right: -8px;
+}
+
+.wf-sdp-link {
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--_wf-sdp-primary);
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.wf-sdp-link:hover {
+  background: var(--_wf-sdp-primary-soft);
+}
+
+.wf-sdp-link:focus-visible {
+  outline: 2px solid var(--_wf-sdp-primary);
+}
+
+.wf-sdp-link--muted {
+  color: var(--_wf-sdp-fg-medium);
+}
+
+.wf-sdp-link--muted:hover {
+  background: var(--_wf-sdp-hover);
+}
+
+.wf-sdp-cta {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--_wf-sdp-primary);
+  color: var(--_wf-sdp-on-primary);
+  transition: background-color 0.2s ease;
+}
+
+.wf-sdp-cta:hover {
+  background: var(--_wf-sdp-primary-hover);
+}
+
+.wf-sdp-cta:focus-visible {
+  outline: 2px solid var(--_wf-sdp-primary);
+  outline-offset: 2px;
+}
+
+.wf-sdp-cta:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Mobile fullscreen sheet */
+.wf-sdp-popover--mobile {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.wf-sdp-modal {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto; /* header, toolbar, body, footer */
+  width: 100%;
+  height: 100%;
+}
+
+.wf-sdp-m-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: var(--_wf-sdp-bg);
+  border-bottom: 1px solid var(--_wf-sdp-border);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--_wf-sdp-fg-strong);
+}
+
+.wf-sdp-m-close {
+  background: none;
+  border: none;
+  padding: 6px;
+  color: var(--_wf-sdp-fg-weak);
+  cursor: pointer;
+  line-height: 0;
+}
+
+.wf-sdp-m-close:focus-visible {
+  outline: 2px solid var(--_wf-sdp-primary);
+  border-radius: 6px;
+}
+
+.wf-sdp-m-close svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.wf-sdp-m-toolbar {
+  padding: 8px 8px 0;
+}
+
+.wf-sdp-m-toolbar .wf-sdp-toolbar {
+  padding: 4px 0 8px;
+}
+
+.wf-sdp-m-toolbar .wf-sdp-nav {
+  padding: 8px;
+}
+
+.wf-sdp-m-toolbar .wf-sdp-title-btn {
+  font-size: 17px;
+  padding: 8px 8px 8px 12px;
+}
+
+.wf-sdp-m-body {
+  position: relative;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px 8px 16px;
+}
+
+.wf-sdp-m-body .wf-sdp-body {
+  min-height: 100%;
+}
+
+.wf-sdp-popover--mobile .wf-sdp-cell {
+  padding: 14px 6px;
+}
+
+.wf-sdp-popover--mobile .wf-sdp-weekday {
+  padding: 4px 0;
+}
+
+.wf-sdp-popover--mobile .wf-sdp-option {
+  min-height: 52px;
+  font-size: 16px;
+}
+
+.wf-sdp-popover--mobile .wf-sdp-months {
+  grid-auto-rows: max-content;
+  align-content: start;
+}
+
+.wf-sdp-m-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 16px;
+  padding-bottom: calc(12px + var(--_wf-sdp-safe-bottom));
+  background: var(--_wf-sdp-bg);
+  border-top: 1px solid var(--_wf-sdp-border);
+}
+
+.wf-sdp-m-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 32px;
+}
+
+.wf-sdp-m-footer .wf-sdp-footer-left {
+  font-size: 14px;
+}
+
+.wf-sdp-m-footer .wf-sdp-link {
+  font-size: 14px;
+}
+
+.wf-sdp-m-footer .wf-sdp-cta {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+}
+
+/* No hover surfaces on touch layout */
+.wf-sdp-popover--mobile .wf-sdp-cell:hover,
+.wf-sdp-popover--mobile .wf-sdp-option:hover {
+  background: var(--_wf-sdp-bg);
+}
+
+.wf-sdp-popover--mobile .wf-sdp-selected:hover,
+.wf-sdp-popover--mobile .wf-sdp-option--selected:hover {
+  background: var(--_wf-sdp-primary);
+}
+
+/* Kill tap highlight on iOS/Android */
+.wf-sdp-cell,
+.wf-sdp-nav,
+.wf-sdp-title-btn,
+.wf-sdp-option,
+.wf-sdp-link,
+.wf-sdp-cta,
+.wf-sdp-m-close,
+.wf-sdp-input {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
